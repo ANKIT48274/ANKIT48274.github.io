@@ -6,20 +6,42 @@
 </head>
 <body>
 
-<h1>🧪 Security Labs</h1>
+<header>
+  <div class="logo">🔐 AnkitSec</div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="labs.html">Labs</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-<p>Hands-on vulnerability research & exploitation</p>
+<div class="container">
+  <h2>Labs & Practice</h2>
 
-<ul>
-  <li>✔ Reflected XSS – DVWA</li>
-  <li>✔ Stored XSS – bWAPP</li>
-  <li>✔ SQL Injection – PortSwigger Labs</li>
-  <li>✔ IDOR – Real-world logic flaws</li>
-</ul>
+  <div class="card">
+    <h3>🔓 SQL Injection – Login Bypass</h3>
+    <p>Authentication bypass using SQL injection on vulnerable input.</p>
+    <p><b>Impact:</b> Unauthorized access</p>
+    <p><b>Tools:</b> Burp Suite, Browser</p>
+  </div>
 
-<p>Detailed writeups coming soon...</p>
+  <div class="card">
+    <h3>⚠️ Cross-Site Scripting (XSS)</h3>
+    <p>Reflected XSS due to improper input sanitization.</p>
+    <p><b>Impact:</b> Session hijacking</p>
+  </div>
 
-<a href="../index.html">⬅ Back</a>
+  <div class="card">
+    <h3>🕵️ Directory Enumeration</h3>
+    <p>Hidden directories discovered using automated tools.</p>
+    <p><b>Tools:</b> Dirsearch, FFUF</p>
+  </div>
+</div>
+
+<footer>
+  © 2025 AnkitSec
+</footer>
 
 </body>
 </html>
