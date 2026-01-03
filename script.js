@@ -1,23 +1,18 @@
-const words = [
-  "Penetration Tester",
-  "Cybersecurity Researcher",
-  "Ethical Hacker"
-];
+const counters = document.querySelectorAll('.count');
 
-let i = 0, j = 0, del = false;
-const el = document.querySelector(".type");
+counters.forEach(counter => {
+  const update = () => {
+    const target = +counter.getAttribute('data-target');
+    const current = +counter.innerText;
+    const inc = Math.ceil(target / 50);
 
-function type(){
-  if(!del && j <= words[i].length){
-    el.textContent = words[i].slice(0,j++);
-  }else if(del && j >= 0){
-    el.textContent = words[i].slice(0,j--);
-  }
-
-  if(j === words[i].length) del = true;
-  if(del && j === 0){ del = false; i = (i+1)%words.length; }
-
-  setTimeout(type, del ? 60 : 100);
-}
-type();
+    if (current < target) {
+      counter.innerText = current + inc;
+      setTimeout(update, 40);
+    } else {
+      counter.innerText = target;
+    }
+  };
+  update();
+});
 
