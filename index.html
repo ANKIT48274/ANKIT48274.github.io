@@ -4,77 +4,143 @@
   <meta charset="UTF-8">
   <title>Ankit Patidar | Penetration Tester</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <img src="assets/images/profile.jpg" alt="Ankit Patidar" class="profile">
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">ankitsec.in</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="profile-ring">
+      <img src="images/profile.jpg" alt="Ankit Patidar">
+    </div>
 
     <h1>Ankit Patidar</h1>
     <h2>Penetration Tester | Cybersecurity</h2>
 
-    <p class="subtitle">
+    <p class="hero-text">
       Web Application, Network & API Security Testing
     </p>
 
-    <div class="links">
-      <a href="https://www.linkedin.com/in/ankit-patidar-350308305/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/ANKIT48274" target="_blank">GitHub</a>
-      <a href="https://www.youtube.com/@AnkuPatel-s9o" target="_blank">YouTube</a>
-      <a href="https://www.instagram.com/hacker_.world9" target="_blank">Instagram</a>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/ankit-patidar-350308305/">LinkedIn</a>
+      <a href="https://github.com/ANKIT48274">GitHub</a>
+      <a href="https://www.youtube.com/@AnkuPatel-s9o">YouTube</a>
+      <a href="https://www.instagram.com/hacker_.world9">Instagram</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section>
-    <h3>About Me</h3>
+<!-- ABOUT -->
+<section class="section" id="about">
+  <h2 class="section-title">About Me</h2>
+
+  <div class="about-container">
     <p>
-      I’m Ankit Patidar, a penetration tester focused on web, network, and API
-      security testing. I work on identifying real-world vulnerabilities and
-      improving security posture before exploitation.
+      I’m <b>Ankit Patidar</b>, a penetration tester focused on web, network,
+      and API security testing. I work on identifying real-world vulnerabilities
+      and improving security posture before exploitation.
     </p>
-  </section>
 
-  <!-- SKILLS -->
-  <section>
-    <h3>Skills</h3>
-    <ul>
-      <li>Web Application Penetration Testing</li>
-      <li>Network & API Security Testing</li>
-      <li>Linux & Windows Server Administration</li>
-      <li>OWASP Top 10</li>
-      <li>Bug Bounty Methodology</li>
-    </ul>
-  </section>
+    <div class="stats">
+      <div class="stat-box">0<br><span>Labs Completed</span></div>
+      <div class="stat-box">0<br><span>Bug Bounty Reports</span></div>
+      <div class="stat-box">0<br><span>CVEs Published</span></div>
+      <div class="stat-box">0<br><span>CTFs Played</span></div>
+    </div>
+  </div>
+</section>
 
-  <!-- CERTIFICATIONS -->
-  <section>
-    <h3>Certifications</h3>
-    <ul>
-      <li>AICWSA – Windows Server Administrator</li>
-      <li>AICLSA – Linux Server Administrator</li>
-      <li>AICWSE – WordPress Security Expert</li>
-      <li>CRTOM – Red Team Operations</li>
-      <li>CPPS – Phishing Prevention Specialist</li>
-    </ul>
-  </section>
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <h2 class="section-title">Skills</h2>
 
-  <!-- CONTACT -->
-  <section>
-    <h3>Contact</h3>
-    <p>Email: <strong>ankupatel279@gmail.com</strong></p>
-    <p>Phone: <strong>+91 8103548282</strong></p>
-    <p>Website: <strong>ankitsec.in</strong></p>
-  </section>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Core Skills</h3>
+      <ul>
+        <li>Web Application Penetration Testing</li>
+        <li>Network & API Security Testing</li>
+        <li>Bug Bounty Methodology</li>
+        <li>Linux & Windows Server Administration</li>
+        <li>OWASP Top 10</li>
+      </ul>
+    </div>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 Ankit Patidar<br>
-    Securing the Web Through Ethical Hacking
-  </footer>
+    <div class="card">
+      <h3>Tools</h3>
+      <ul>
+        <li>Nmap</li>
+        <li>Burp Suite</li>
+        <li>Metasploit</li>
+        <li>SQLmap</li>
+        <li>Wireshark</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <h2 class="section-title">Projects & Achievements</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>CVE Discoveries</h3>
+      <p><b>CVE-2025-XXXXX</b><br>
+      XSS vulnerability responsibly disclosed.</p>
+    </div>
+
+    <div class="card">
+      <h3>Security Projects</h3>
+      <p>Coming Soon</p>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section" id="certifications">
+  <h2 class="section-title">Certifications</h2>
+
+  <div class="cert-grid">
+    <div class="cert">AICWSA<br><span>Windows Server Administrator</span></div>
+    <div class="cert">AICLSA<br><span>Linux Server Administrator</span></div>
+    <div class="cert">AICWSE<br><span>WordPress Security Expert</span></div>
+    <div class="cert">CRTOM<br><span>Red Team Operations</span></div>
+    <div class="cert">CPPS<br><span>Phishing Prevention Specialist</span></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <h2 class="section-title">Contact Me</h2>
+
+  <div class="contact-box">
+    <p>📧 ankupatel279@gmail.com</p>
+    <p>📞 +91 8103548282</p>
+    <p>🌐 https://ankitsec.in</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Ankit Patidar<br>
+  Securing the Web Through Ethical Hacking
+</footer>
 
 </body>
 </html>
