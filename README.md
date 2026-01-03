@@ -1,1 +1,0 @@
-AnkitSec - Cybersecurity Portfolio Website
