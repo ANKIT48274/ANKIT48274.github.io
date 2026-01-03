@@ -3,133 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ankit Patidar | Cybersecurity</title>
+<title>Ankit Patidar | Penetration Tester</title>
+
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
 
-<header class="navbar">
+<!-- NAVBAR -->
+<nav class="navbar">
   <div class="logo">ankitsec.in</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#certs">Certifications</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
 <!-- HERO -->
-<section id="home" class="hero">
-  <div class="hero-img">
-    <img src="images/profile.jpeg" alt="Ankit Patidar">
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="profile-ring">
+      <img src="images/profile.jpeg" alt="Ankit Patidar">
+    </div>
   </div>
 
-  <div class="hero-text">
+  <div class="hero-right">
     <h1>Ankit Patidar</h1>
-    <h2>Penetration Tester | Cybersecurity | Ethical Hacking</h2>
+    <h3>Penetration Tester | Cybersecurity | Ethical Hacking</h3>
+
     <p>
       Penetration Tester focused on web application, network, and API security testing.
       I actively identify vulnerabilities through hands-on labs, bug bounty programs,
       and real-world security assessments.
     </p>
 
-    <div class="socials">
-      <a href="https://www.linkedin.com/in/ankit-patidar-350308305/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/ankit-patidar-350308305/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
       <a href="https://github.com/ANKIT48274" target="_blank"><i class="fab fa-github"></i></a>
       <a href="https://www.youtube.com/@AnkuPatel-s9o" target="_blank"><i class="fab fa-youtube"></i></a>
       <a href="https://www.instagram.com/hacker_.world9" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="about">
+<section class="about" id="about">
   <h2>About Me</h2>
-  <p>
-    I’m Ankit Patidar, a penetration tester focused on identifying and exploiting
-    real-world vulnerabilities in web applications, networks, and APIs.
-    I actively perform bug bounty hunting and security research with responsible disclosure.
-  </p>
 
-  <div class="stats">
-    <div><span>65+</span> Labs Completed</div>
-    <div><span>1</span> Bug Bounty Report</div>
-    <div><span>0</span> CVEs Published</div>
+  <div class="about-container">
+    <div class="about-text">
+      <p>
+        I’m Ankit Patidar, a penetration tester focused on identifying and exploiting
+        real-world vulnerabilities in web applications, networks, and APIs.
+        I actively perform bug bounty hunting and security research with responsible disclosure.
+      </p>
+
+      <p>
+        Hands-on experience in web exploitation, Linux systems,
+        vulnerability assessment, and OWASP Top 10 testing.
+      </p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat">
+        <span class="counter" data-target="65">0</span>+
+        <p>Labs Completed</p>
+      </div>
+      <div class="stat">
+        <span class="counter" data-target="1">0</span>
+        <p>Bug Bounty Reports</p>
+      </div>
+      <div class="stat">
+        <span class="counter" data-target="0">0</span>
+        <p>CVEs Published</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills" class="skills">
+<section class="skills" id="skills">
   <h2>Skills</h2>
 
-  <div class="skill-box">
-    <h3>Core Skills</h3>
-    <ul>
-      <li>Web Application Penetration Testing</li>
-      <li>Network & API Security Testing</li>
-      <li>Vulnerability Assessment</li>
-      <li>Linux & Windows Server Administration</li>
-      <li>OWASP Top 10</li>
-      <li>Bug Bounty Methodology</li>
-    </ul>
-  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>Core Skills</h3>
+      <ul>
+        <li>Web Application Penetration Testing</li>
+        <li>Network & API Security Testing</li>
+        <li>Vulnerability Assessment</li>
+        <li>Linux & Windows Server Administration</li>
+        <li>OWASP Top 10</li>
+        <li>Bug Bounty Methodology</li>
+      </ul>
+    </div>
 
-  <div class="skill-box">
-    <h3>Tools</h3>
-    <ul>
-      <li>Nmap</li>
-      <li>Burp Suite</li>
-      <li>Metasploit</li>
-      <li>SQLmap</li>
-      <li>Nikto</li>
-      <li>Wireshark</li>
-    </ul>
+    <div class="skill-card">
+      <h3>Tools</h3>
+      <ul>
+        <li>Nmap</li>
+        <li>Burp Suite</li>
+        <li>Metasploit</li>
+        <li>SQLmap</li>
+        <li>Nikto</li>
+        <li>Wireshark</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects" class="projects">
+<section class="projects" id="projects">
   <h2>Projects & Achievements</h2>
 
-  <div class="card">
+  <div class="project-card">
     <h3>CVE Discoveries</h3>
-    <p><b>CVE-2025-XXXXX</b><br>XSS vulnerability responsibly disclosed.</p>
+    <p><strong>CVE-2025-XXXXX</strong></p>
+    <p>XSS vulnerability responsibly disclosed.</p>
   </div>
 
-  <div class="card">
+  <div class="project-card">
     <h3>Bug Bounty & Research</h3>
-    <p>HackerOne • Bugcrowd<br>Status: In Progress</p>
+    <p>HackerOne • Bugcrowd</p>
+    <p>Status: <strong>In Progress</strong></p>
   </div>
 </section>
 
 <!-- CERTIFICATIONS -->
-<section id="certs" class="certs">
+<section class="certifications" id="certifications">
   <h2>Certifications</h2>
 
   <div class="cert-grid">
-    <a href="https://certs.armourinfosec.com/aicwsa/ankit-patidar/" target="_blank">AICWSA</a>
-    <a href="https://certs.armourinfosec.com/aiclsa/ankit-patidar/" target="_blank">AICLSA</a>
-    <a href="https://certs.armourinfosec.com/aicwse/ankit-patidar/" target="_blank">AICWSE</a>
-    <a href="https://courses.redteamleaders.com/exam-completion/0a691fbc46ca891e" target="_blank">CRTOM</a>
-    <a href="https://drive.google.com/file/d/1DA0jVARDDUmpPIvqPwmcBwIbapMq_2Cm/view" target="_blank">CPPS</a>
+
+    <div class="cert-card">
+      <i class="fas fa-server"></i>
+      <h4>AICWSA</h4>
+      <p>Windows Server Administrator</p>
+      <a href="https://certs.armourinfosec.com/aicwsa/ankit-patidar/" target="_blank">View Certificate</a>
+    </div>
+
+    <div class="cert-card">
+      <i class="fab fa-linux"></i>
+      <h4>AICLSA</h4>
+      <p>Linux Server Administrator</p>
+      <a href="https://certs.armourinfosec.com/aiclsa/ankit-patidar/" target="_blank">View Certificate</a>
+    </div>
+
+    <div class="cert-card">
+      <i class="fab fa-wordpress"></i>
+      <h4>AICWSE</h4>
+      <p>WordPress Security Expert</p>
+      <a href="https://certs.armourinfosec.com/aicwse/ankit-patidar/" target="_blank">View Certificate</a>
+    </div>
+
+    <div class="cert-card">
+      <i class="fas fa-user-secret"></i>
+      <h4>CRTOM</h4>
+      <p>Red Team Operations</p>
+      <a href="https://courses.redteamleaders.com/exam-completion/0a691fbc46ca891e" target="_blank">View Certificate</a>
+    </div>
+
+    <div class="cert-card">
+      <i class="fas fa-fish"></i>
+      <h4>CPPS</h4>
+      <p>Phishing Prevention Specialist</p>
+      <a href="https://drive.google.com/file/d/1DA0jVARDDUmpPIvqPwmcBwIbapMq_2Cm/view" target="_blank">View Certificate</a>
+    </div>
+
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="contact">
+<section class="contact" id="contact">
   <h2>Contact Me</h2>
-  <p><a href="mailto:ankupatel279@gmail.com">ankupatel279@gmail.com</a></p>
-  <p><a href="tel:+918103548282">+91 8103548282</a></p>
-  <p><a href="https://ankitsec.in">ankitsec.in</a></p>
+
+  <div class="contact-box">
+    <p><i class="fas fa-envelope"></i>
+      <a href="mailto:ankupatel279@gmail.com">ankupatel279@gmail.com</a>
+    </p>
+    <p><i class="fas fa-phone"></i>
+      <a href="tel:+918103548282">+91 8103548282</a>
+    </p>
+    <p><i class="fas fa-globe"></i>
+      <a href="https://ankitsec.in" target="_blank">ankitsec.in</a>
+    </p>
+  </div>
 </section>
 
 <footer>
-© 2026 Ankit Patidar — Securing the Web Through Ethical Hacking
+  © 2026 Ankit Patidar — Securing the Web Through Ethical Hacking
 </footer>
+
+<script>
+const counters = document.querySelectorAll('.counter');
+counters.forEach(counter => {
+  const update = () => {
+    const target = +counter.getAttribute('data-target');
+    const current = +counter.innerText;
+    const increment = target / 80;
+
+    if(current < target){
+      counter.innerText = Math.ceil(current + increment);
+      setTimeout(update, 20);
+    } else {
+      counter.innerText = target;
+    }
+  };
+  update();
+});
+</script>
 
 </body>
 </html>
