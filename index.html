@@ -1,218 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ankit Patidar | Cybersecurity</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankit Patidar // root@ankitsec</title>
+<meta name="description" content="Ankit Patidar - Penetration Tester | Cybersecurity | Ethical Hacking">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#040705;
+    --bg-panel:#0a120c;
+    --bg-panel-2:#0d1811;
+    --line:#163425;
+    --green:#39ff88;
+    --green-dim:#1e8f52;
+    --green-mute:#4d7a63;
+    --cyan:#4dfff0;
+    --amber:#ffb454;
+    --red:#ff4d5e;
+    --text:#c9f5da;
+    --text-dim:#7fa891;
+    --mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--mono);
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+  ::selection{background:var(--green); color:#00110a;}
+
+  /* scrollbar */
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--green-dim); border:2px solid var(--bg);}
+
+  a{color:inherit; text-decoration:none;}
+
+  #matrix{
+    position:fixed; inset:0; z-index:0; opacity:0.16; pointer-events:none;
+  }
+
+  .scanlines{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.18) 3px
+    );
+    mix-blend-mode:multiply;
+  }
+
+  .vignette{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    box-shadow: inset 0 0 180px 60px rgba(0,0,0,0.85);
+  }
+
+  .wrap{position:relative; z-index:2;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(4,7,5,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-weight:700; letter-spacing:0.5px; font-size:15px; color:var(--green);
+  }
+  .brand .dot{width:8px; height:8px; background:var(--green); border-radius:50%; box-shadow:0 0 8px var(--green); animation:blink 1.4s infinite;}
+  @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0.15;}}
+  nav ul{list-style:none; display:flex; gap:28px; flex-wrap:wrap;}
+  nav a{
+    font-size:13px; color:var(--text-dim); position:relative; padding:4px 2px;
+    transition:color .2s;
+  }
+  nav a::before{content:'~/';color:var(--green-dim); margin-right:2px;}
+  nav a:hover{color:var(--green);}
+  nav a:hover::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:100%; height:1px; background:var(--green);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1180px; margin:0 auto; padding:70px 24px 60px;
+    display:grid; grid-template-columns:1.05fr 1.3fr; gap:50px; align-items:center;
+  }
+  @media(max-width:900px){ .hero{grid-template-columns:1fr; padding-top:40px;} }
+
+  .terminal-window{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    box-shadow:0 0 0 1px rgba(57,255,136,0.05), 0 20px 60px rgba(0,0,0,0.6);
+    overflow:hidden;
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px; background:var(--bg-panel-2); border-bottom:1px solid var(--line);
+  }
+  .term-bar span{width:11px; height:11px; border-radius:50%; display:inline-block;}
+  .term-bar .r{background:#ff5f57;} .term-bar .y{background:#febc2e;} .term-bar .g{background:#28c840;}
+  .term-bar .title{margin-left:auto; font-size:11px; color:var(--text-dim);}
+
+  .avatar-frame{
+    padding:26px; display:flex; flex-direction:column; align-items:center; gap:16px;
+  }
+  .avatar-ring{
+    width:190px; height:190px; border-radius:50%; padding:4px;
+    background:conic-gradient(from 0deg, var(--green), var(--cyan), var(--green-dim), var(--green));
+    animation:spin 6s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .avatar-ring img{
+    width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;
+    border:4px solid var(--bg-panel);
+    filter:grayscale(0.15) contrast(1.05);
+  }
+  .id-line{font-size:11.5px; color:var(--text-dim); text-align:center; line-height:1.6;}
+  .id-line b{color:var(--green);}
+
+  .hero-right .prompt-line{
+    font-size:13px; color:var(--green-dim); margin-bottom:6px;
+  }
+  .glitch{
+    font-size:clamp(34px,5vw,54px); font-weight:800; color:var(--green);
+    text-shadow:0 0 12px rgba(57,255,136,0.35);
+    position:relative; letter-spacing:0.5px; line-height:1.1;
+  }
+  .cursor{display:inline-block; width:10px; height:0.85em; background:var(--green); margin-left:4px; vertical-align:-2px; animation:blink 1s steps(1) infinite;}
+
+  .role-line{
+    margin-top:14px; font-size:16px; color:var(--cyan);
+  }
+  .role-line .sep{color:var(--text-dim); margin:0 8px;}
+
+  .desc{
+    margin-top:20px; color:var(--text-dim); font-size:14.5px; line-height:1.85;
+    max-width:640px; border-left:2px solid var(--green-dim); padding-left:16px;
+  }
+
+  .socials{ margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; }
+  .socials a{
+    width:38px; height:38px; border:1px solid var(--line); border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dim); transition:.2s;
+    background:var(--bg-panel);
+  }
+  .socials a:hover{color:var(--green); border-color:var(--green-dim); box-shadow:0 0 12px rgba(57,255,136,0.2); transform:translateY(-2px);}
+  .socials svg{width:17px; height:17px;}
+
+  .cta-row{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:13px; padding:12px 20px; border-radius:6px; cursor:pointer;
+    border:1px solid var(--green-dim); color:var(--green); background:transparent;
+    transition:.2s; letter-spacing:0.3px;
+  }
+  .btn:hover{background:rgba(57,255,136,0.08); box-shadow:0 0 16px rgba(57,255,136,0.25);}
+  .btn.solid{background:var(--green); color:#00160c; font-weight:700; border-color:var(--green);}
+  .btn.solid:hover{box-shadow:0 0 20px rgba(57,255,136,0.5);}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{ max-width:1180px; margin:0 auto; padding:80px 24px; }
+  .sec-head{ margin-bottom:36px; }
+  .sec-tag{ font-size:12px; color:var(--green-dim); letter-spacing:2px; text-transform:uppercase; }
+  .sec-title{
+    font-size:clamp(24px,3vw,32px); font-weight:700; color:var(--text); margin-top:8px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .sec-title::before{content:'>'; color:var(--green);}
+  .sec-rule{ height:1px; background:linear-gradient(90deg,var(--green-dim),transparent); margin-top:16px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:40px; }
+  @media(max-width:850px){ .about-grid{grid-template-columns:1fr;} }
+  .panel{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px; padding:26px;
+  }
+  .about-text{ color:var(--text-dim); font-size:14.5px; line-height:1.9; }
+  .about-text .hl{ color:var(--green); }
+  .about-text p + p{ margin-top:14px; }
+
+  .stat-grid{ display:flex; flex-direction:column; gap:16px; }
+  .stat-item{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:16px 18px; background:var(--bg-panel-2); border:1px solid var(--line); border-radius:6px;
+  }
+  .stat-num{ font-size:26px; font-weight:800; color:var(--green); text-shadow:0 0 10px rgba(57,255,136,0.3); }
+  .stat-label{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px; }
+  .skill-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px; padding:20px;
+    transition:.2s;
+  }
+  .skill-card:hover{ border-color:var(--green-dim); transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+  .skill-card .sk-head{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .skill-card .sk-icon{ color:var(--green); font-size:16px; }
+  .skill-card h3{ font-size:14.5px; color:var(--text); }
+  .bar-track{ height:6px; background:var(--bg-panel-2); border-radius:4px; overflow:hidden; border:1px solid var(--line); }
+  .bar-fill{ height:100%; background:linear-gradient(90deg,var(--green-dim),var(--green)); border-radius:4px; }
+  .sk-pct{ font-size:11px; color:var(--text-dim); margin-top:6px; text-align:right; }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px; }
+  .proj-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px; overflow:hidden;
+    display:flex; flex-direction:column; transition:.2s;
+  }
+  .proj-card:hover{ border-color:var(--green-dim); box-shadow:0 14px 34px rgba(0,0,0,0.45); transform:translateY(-4px); }
+  .proj-top{
+    padding:14px 18px; background:var(--bg-panel-2); border-bottom:1px solid var(--line);
+    font-size:11.5px; color:var(--text-dim); display:flex; justify-content:space-between;
+  }
+  .proj-top .status{ color:var(--green); }
+  .proj-body{ padding:20px; flex:1; display:flex; flex-direction:column; gap:12px; }
+  .proj-body h3{ font-size:16px; color:var(--text); }
+  .proj-body p{ font-size:13px; color:var(--text-dim); line-height:1.7; }
+  .tag-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:auto; }
+  .tag{ font-size:10.5px; padding:4px 9px; border:1px solid var(--line); border-radius:20px; color:var(--cyan); }
+
+  /* ---------- CERTIFICATIONS ---------- */
+  .cert-list{ display:flex; flex-direction:column; gap:14px; }
+  .cert-row{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px; padding:18px 22px;
+    flex-wrap:wrap;
+  }
+  .cert-left{ display:flex; align-items:center; gap:14px; }
+  .cert-icon{
+    width:38px; height:38px; border-radius:6px; background:var(--bg-panel-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; color:var(--green); font-size:16px; flex-shrink:0;
+  }
+  .cert-name{ font-size:14px; color:var(--text); }
+  .cert-meta{ font-size:11.5px; color:var(--text-dim); margin-top:2px; }
+  .cert-status{ font-size:11px; color:var(--green); border:1px solid var(--green-dim); padding:5px 12px; border-radius:20px; white-space:nowrap; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-panel{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px; padding:40px;
+    text-align:center;
+  }
+  .contact-panel p{ color:var(--text-dim); font-size:14px; max-width:520px; margin:14px auto 26px; line-height:1.8; }
+  .contact-email{
+    font-size:18px; color:var(--green); border:1px dashed var(--green-dim); display:inline-block;
+    padding:12px 24px; border-radius:6px; margin-bottom:22px;
+  }
+
+  footer{
+    border-top:1px solid var(--line); padding:26px 24px; text-align:center;
+    font-size:11.5px; color:var(--text-dim);
+  }
+  footer .green{ color:var(--green-dim); }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="logo">ankitsec.in</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<canvas id="matrix"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
 
-<!-- HERO -->
-<section id="home" class="hero">
-  <div class="hero-left">
-    <div class="profile-ring">
-      <img src="images/profile.jpg" alt="Ankit Patidar">
+<div class="wrap">
+
+  <header>
+    <div class="nav-inner">
+      <div class="brand"><span class="dot"></span> root@ankitsec:~$</div>
+      <nav>
+        <ul>
+          <li><a href="#home">home</a></li>
+          <li><a href="#about">about</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#certifications">certifications</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <div class="hero-right">
-    <h1>Ankit Patidar</h1>
-    <h2>Penetration Tester | Cybersecurity | Ethical Hacking</h2>
-    <p>
-      Penetration Tester focused on web application, network, and API security testing.
-      I actively identify vulnerabilities through labs, bug bounty programs,
-      and real-world security assessments.
-    </p>
-
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/in/ankit-patidar-350308305/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://github.com/ANKIT48274" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://www.youtube.com/@AnkuPatel-s9o" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.instagram.com/hacker_.world9" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="terminal-window">
+      <div class="term-bar">
+        <span class="r"></span><span class="y"></span><span class="g"></span>
+        <span class="title">profile.sh</span>
+      </div>
+      <div class="avatar-frame">
+        <div class="avatar-ring">
+          <img src="images/profile.jpg" alt="Ankit Patidar">
+        </div>
+        <div class="id-line">
+          <b>USER:</b> ankit_patidar<br>
+          <b>ROLE:</b> penetration_tester<br>
+          <b>STATUS:</b> <span style="color:var(--green)">● active</span>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about" class="section">
-  <h2>About Me</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I’m Ankit Patidar, a penetration tester focused on identifying and exploiting
-        real-world vulnerabilities in web applications, networks, and APIs.
-        I actively perform bug bounty hunting and security research with responsible disclosure.
+    <div class="hero-right">
+      <div class="prompt-line" id="bootLine">initializing session...</div>
+      <h1 class="glitch" id="typedName"></h1>
+      <div class="role-line" id="typedRole"></div>
+      <p class="desc">
+        Penetration Tester focused on web application, network, and API security testing.
+        I actively identify vulnerabilities through labs, bug bounty programs, and
+        real-world security assessments.
       </p>
-      <p>
-        Hands-on experience in web exploitation, Linux systems,
-        vulnerability assessment, and OWASP Top 10 testing.
-      </p>
+
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/ankit-patidar-350308305/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <a href="https://github.com/ANKIT48274" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.87 10.94c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.77.12 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.68.42.36.78 1.08.78 2.18v3.23c0 .32.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@AnkuPatel-s9o" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/hacker_.world9" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .25 2.4.42.6.24 1.03.53 1.48.98.45.45.74.87.98 1.48.17.4.36 1.2.42 2.4.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 2-.42 2.4-.24.6-.53 1.03-.98 1.48-.45.45-.87.74-1.48.98-.4.17-1.2.36-2.4.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-2-.25-2.4-.42a4 4 0 0 1-1.48-.98 4 4 0 0 1-.98-1.48c-.17-.4-.36-1.2-.42-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-2 .42-2.4.24-.6.53-1.03.98-1.48.45-.45.87-.74 1.48-.98.4-.17 1.2-.36 2.4-.42C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.55.22-1.9.36-.48.19-.82.41-1.18.77-.36.36-.58.7-.77 1.18-.14.35-.31.9-.36 1.9C3 9.28 3 9.65 3 12s0 2.72.07 3.72c.05 1 .22 1.55.36 1.9.19.48.41.82.77 1.18.36.36.7.58 1.18.77.35.14.9.31 1.9.36 1.24.07 1.61.07 4.76.07s3.52 0 4.76-.07c1-.05 1.55-.22 1.9-.36.48-.19.82-.41 1.18-.77.36-.36.58-.7.77-1.18.14-.35.31-.9.36-1.9.07-1 .07-1.37.07-3.72s0-2.72-.07-3.72c-.05-1-.22-1.55-.36-1.9a3.2 3.2 0 0 0-.77-1.18 3.2 3.2 0 0 0-1.18-.77c-.35-.14-.9-.31-1.9-.36-1.24-.07-1.61-.07-4.76-.07zm0 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 1.8a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4zm5.7-2a1.05 1.05 0 1 1-2.1 0 1.05 1.05 0 0 1 2.1 0z"/></svg>
+        </a>
+      </div>
+
+      <div class="cta-row">
+        <a href="#contact" class="btn solid">./contact_me.sh</a>
+        <a href="#projects" class="btn">cat projects.log</a>
+      </div>
     </div>
+  </section>
 
-    <div class="stats-box">
-      <div><span>163+</span> Labs Completed</div>
-      <div><span>10+</span> CTFs Played</div>
-      <div><span>1</span> CVE Published</div>
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="sec-head">
+      <div class="sec-tag">// 01 identity</div>
+      <div class="sec-title">about me</div>
+      <div class="sec-rule"></div>
     </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills" class="section">
-  <h2>Skills</h2>
-
-  <div class="skills-grid">
-    <div class="card">
-      <h3>Core Skills</h3>
-      <ul>
-        <li>Web Application Penetration Testing</li>
-        <li>Network & API Security Testing</li>
-        <li>Vulnerability Assessment</li>
-        <li>Linux & Windows Server Administration</li>
-        <li>OWASP Top 10</li>
-        <li>Bug Bounty Methodology</li>
-      </ul>
+    <div class="about-grid">
+      <div class="panel about-text reveal">
+        <p>I'm <span class="hl">Ankit Patidar</span>, a penetration tester focused on identifying and exploiting real-world vulnerabilities in web applications, networks, and APIs.</p>
+        <p>I actively perform <span class="hl">bug bounty hunting</span> and security research with responsible disclosure.</p>
+        <p>Hands-on experience in web exploitation, Linux systems, vulnerability assessment, and <span class="hl">OWASP Top 10</span> testing.</p>
+      </div>
+      <div class="stat-grid reveal">
+        <div class="stat-item"><span class="stat-label">labs completed</span><span class="stat-num">163+</span></div>
+        <div class="stat-item"><span class="stat-label">ctfs played</span><span class="stat-num">10+</span></div>
+        <div class="stat-item"><span class="stat-label">cve published</span><span class="stat-num">1</span></div>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>Tools</h3>
-      <ul>
-        <li>Nmap</li>
-        <li>Burp Suite</li>
-        <li>Metasploit</li>
-        <li>SQLmap</li>
-        <li>Nikto</li>
-        <li>Wireshark</li>
-      </ul>
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="sec-head">
+      <div class="sec-tag">// 02 arsenal</div>
+      <div class="sec-title">skills</div>
+      <div class="sec-rule"></div>
     </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="section">
-  <h2>Projects & Achievements</h2>
-
-  <div class="card">
-    <h3>CVE Discoveries</h3>
-    <p><strong>CVE-2025-XXXXX</strong><br>XSS vulnerability responsibly disclosed.</p>
-  </div>
-
-  <div class="card">
-    <h3>Bug Bounty & Research</h3>
-    <p>HackerOne • Bugcrowd<br>Status: <strong>In Progress</strong></p>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications" class="section">
-  <h2>Certifications</h2>
-
-  <div class="cert-grid">
-
-    <div class="cert-card">
-      <i class="fas fa-server"></i>
-      <h4>AICWSA</h4>
-      <p>Windows Server Administrator</p>
-      <a href="https://certs.armourinfosec.com/aicwsa/ankit-patidar/" target="_blank">View Certificate</a>
+    <div class="skills-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+      <div class="panel reveal">
+        <div class="sec-tag" style="margin-bottom:14px;">core_skills.txt</div>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--green);">$</span> Web Application Penetration Testing</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--green);">$</span> Network &amp; API Security Testing</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--green);">$</span> Vulnerability Assessment</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--green);">$</span> Linux &amp; Windows Server Administration</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--green);">$</span> OWASP Top 10</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--green);">$</span> Bug Bounty Methodology</li>
+        </ul>
+      </div>
+      <div class="panel reveal">
+        <div class="sec-tag" style="margin-bottom:14px;">tools.txt</div>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--cyan);">#</span> Nmap</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--cyan);">#</span> Burp Suite</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--cyan);">#</span> Metasploit</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--cyan);">#</span> SQLmap</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--cyan);">#</span> Nikto</li>
+          <li style="color:var(--text-dim); font-size:14px;"><span style="color:var(--cyan);">#</span> Wireshark</li>
+        </ul>
+      </div>
     </div>
+  </section>
 
-    <div class="cert-card">
-      <i class="fab fa-linux"></i>
-      <h4>AICLSA</h4>
-      <p>Linux Server Administrator</p>
-      <a href="https://certs.armourinfosec.com/aiclsa/ankit-patidar/" target="_blank">View Certificate</a>
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="sec-head">
+      <div class="sec-tag">// 03 field work</div>
+      <div class="sec-title">projects</div>
+      <div class="sec-rule"></div>
     </div>
-
-    <div class="cert-card">
-      <i class="fab fa-wordpress"></i>
-      <h4>AICWSE</h4>
-      <p>WordPress Security Expert</p>
-      <a href="https://certs.armourinfosec.com/aicwse/ankit-patidar/" target="_blank">View Certificate</a>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-top"><span>cve_discoveries.md</span><span class="status">disclosed</span></div>
+        <div class="proj-body">
+          <h3>CVE-2025-XXXXX</h3>
+          <p>XSS vulnerability responsibly disclosed following coordinated disclosure practices.</p>
+          <div class="tag-row"><span class="tag">XSS</span><span class="tag">Web Security</span><span class="tag">CVE</span></div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-top"><span>bug_bounty.log</span><span class="status">in progress</span></div>
+        <div class="proj-body">
+          <h3>Bug Bounty &amp; Research</h3>
+          <p>Active vulnerability research and reporting across public bug bounty programs.</p>
+          <div class="tag-row"><span class="tag">HackerOne</span><span class="tag">Bugcrowd</span></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="cert-card">
-      <i class="fas fa-user-secret"></i>
-      <h4>CRTOM</h4>
-      <p>Red Team Operations</p>
-      <a href="https://courses.redteamleaders.com/exam-completion/0a691fbc46ca891e" target="_blank">View Certificate</a>
+  <!-- CERTIFICATIONS -->
+  <section class="section" id="certifications">
+    <div class="sec-head">
+      <div class="sec-tag">// 04 credentials</div>
+      <div class="sec-title">certifications</div>
+      <div class="sec-rule"></div>
     </div>
-
-    <div class="cert-card">
-      <i class="fas fa-shield-halved"></i>
-      <h4>CPPS</h4>
-      <p>Phishing Prevention Specialist</p>
-      <a href="https://drive.google.com/file/d/1DA0jVARDDUmpPIvqPwmcBwIbapMq_2Cm/view" target="_blank">View Certificate</a>
+    <div class="cert-list">
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">⌂</div>
+          <div>
+            <div class="cert-name">AICWSA</div>
+            <div class="cert-meta">Windows Server Administrator</div>
+          </div>
+        </div>
+        <a href="https://certs.armourinfosec.com/aicwsa/ankit-patidar/" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">⌘</div>
+          <div>
+            <div class="cert-name">AICLSA</div>
+            <div class="cert-meta">Linux Server Administrator</div>
+          </div>
+        </div>
+        <a href="https://certs.armourinfosec.com/aiclsa/ankit-patidar/" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">◈</div>
+          <div>
+            <div class="cert-name">AICWSE</div>
+            <div class="cert-meta">WordPress Security Expert</div>
+          </div>
+        </div>
+        <a href="https://certs.armourinfosec.com/aicwse/ankit-patidar/" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">⚑</div>
+          <div>
+            <div class="cert-name">CRTOM</div>
+            <div class="cert-meta">Red Team Operations</div>
+          </div>
+        </div>
+        <a href="https://courses.redteamleaders.com/exam-completion/0a691fbc46ca891e" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">⚙</div>
+          <div>
+            <div class="cert-name">CPPS</div>
+            <div class="cert-meta">Phishing Prevention Specialist</div>
+          </div>
+        </div>
+        <a href="https://drive.google.com/file/d/1DA0jVARDDUmpPIvqPwmcBwIbapMq_2Cm/view" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">⎋</div>
+          <div>
+            <div class="cert-name">OWASP API</div>
+            <div class="cert-meta">API Security Top 10</div>
+          </div>
+        </div>
+        <a href="https://www.credly.com/badges/f9b58681-e9d3-406f-a2d7-042e25839261/public_url" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">◎</div>
+          <div>
+            <div class="cert-name">Cyber Security Career Starter</div>
+            <div class="cert-meta">Foundational cybersecurity training</div>
+          </div>
+        </div>
+        <a href="https://drive.google.com/file/d/1bfUw0ARoTJuO22r7Wml9UmgZu6Icy_Vh/view" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">◇</div>
+          <div>
+            <div class="cert-name">ISC2 Candidate</div>
+            <div class="cert-meta">Certified in Cybersecurity — Candidate</div>
+          </div>
+        </div>
+        <a href="https://www.credly.com/badges/ffd95a73-9f2d-48b5-bfa5-27f00febdec0/linked_in_profile" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
+      <div class="cert-row reveal">
+        <div class="cert-left">
+          <div class="cert-icon">⌬</div>
+          <div>
+            <div class="cert-name">Alfido Tech</div>
+            <div class="cert-meta">Cybersecurity Training</div>
+          </div>
+        </div>
+        <a href="https://www.alfidotech.com/certificate1/BSREG113776.pdf" target="_blank" rel="noopener" class="cert-status">view cert</a>
+      </div>
     </div>
+  </section>
 
-    <div class="cert-card">
-      <i class="fas fa-network-wired"></i>
-      <h4>OWASP API</h4>
-      <p>API Security Top 10</p>
-      <a href="https://www.credly.com/badges/f9b58681-e9d3-406f-a2d7-042e25839261/public_url" target="_blank">View Certificate</a>
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="sec-head">
+      <div class="sec-tag">// 05 uplink</div>
+      <div class="sec-title">contact</div>
+      <div class="sec-rule"></div>
     </div>
-
-    <div class="cert-card">
-      <i class="fas fa-graduation-cap"></i>
-      <h4>Cyber Security Career Starter</h4>
-      <a href="https://drive.google.com/file/d/1bfUw0ARoTJuO22r7Wml9UmgZu6Icy_Vh/view" target="_blank">View Certificate</a>
+    <div class="contact-panel reveal">
+      <p>Open to bug bounty collaborations, security assessments, and research. Drop a message and I'll get back to you.</p>
+      <a href="mailto:ankupatel279@gmail.com" class="contact-email" style="display:block; text-decoration:none;">📧 ankupatel279@gmail.com</a>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:14px;">
+        <a href="tel:+918103548282" class="btn">📞 +91 8103548282</a>
+        <a href="https://ankitsec.in" target="_blank" rel="noopener" class="btn">🌐 ankitsec.in</a>
+      </div>
+      <div class="socials" style="justify-content:center; margin-top:26px;">
+        <a href="https://www.linkedin.com/in/ankit-patidar-350308305/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+        <a href="https://github.com/ANKIT48274" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.87 10.94c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.77.12 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.68.42.36.78 1.08.78 2.18v3.23c0 .32.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+        <a href="https://www.youtube.com/@AnkuPatel-s9o" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg></a>
+        <a href="https://www.instagram.com/hacker_.world9" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .25 2.4.42.6.24 1.03.53 1.48.98.45.45.74.87.98 1.48.17.4.36 1.2.42 2.4.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 2-.42 2.4-.24.6-.53 1.03-.98 1.48-.45.45-.87.74-1.48.98-.4.17-1.2.36-2.4.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-2-.25-2.4-.42a4 4 0 0 1-1.48-.98 4 4 0 0 1-.98-1.48c-.17-.4-.36-1.2-.42-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-2 .42-2.4.24-.6.53-1.03.98-1.48.45-.45.87-.74 1.48-.98.4-.17 1.2-.36 2.4-.42C8.4 2.2 8.8 2.2 12 2.2z"/></svg></a>
+      </div>
     </div>
+  </section>
 
-    <div class="cert-card">
-      <i class="fas fa-id-badge"></i>
-      <h4>ISC2 Candidate</h4>
-      <a href="https://www.credly.com/badges/ffd95a73-9f2d-48b5-bfa5-27f00febdec0/linked_in_profile" target="_blank">View Certificate</a>
-    </div>
+  <footer>
+    <span class="green">root@ankitsec</span>:~$ echo "© <span id="year"></span> Ankit Patidar — all rights reserved."
+  </footer>
 
-    <div class="cert-card">
-      <i class="fas fa-laptop-code"></i>
-      <h4>Alfido Tech</h4>
-      <p>Cybersecurity Training</p>
-      <a href="https://www.alfidotech.com/certificate1/BSREG113776.pdf" target="_blank">View Certificate</a>
-    </div>
+</div>
 
-  </div>
-</section>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
-<!-- CONTACT -->
-<section id="contact" class="section contact-section">
-  <h2>Contact Me</h2>
+/* ---------- Matrix rain ---------- */
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+let w, h, cols, drops;
+const chars = "アイウエオカキクケコサシスセソ0123456789ABCDEF!@#$%&*<>/\\";
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  cols = Math.floor(w / 16);
+  drops = Array(cols).fill(1);
+}
+resize();
+window.addEventListener('resize', resize);
+function draw(){
+  ctx.fillStyle = 'rgba(4,7,5,0.08)';
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle = '#39ff88';
+  ctx.font = '14px monospace';
+  for(let i=0;i<drops.length;i++){
+    const text = chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(text, i*16, drops[i]*16);
+    if(drops[i]*16 > h && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+}
+setInterval(draw, 45);
 
-  <div class="contact-icons">
+/* ---------- Boot / typing sequence ---------- */
+const bootMsgs = ["establishing secure connection...", "authenticating user...", "access granted."];
+const bootEl = document.getElementById('bootLine');
+let bootIdx = 0;
+function cycleBoot(){
+  bootEl.textContent = bootMsgs[bootIdx % bootMsgs.length];
+  bootIdx++;
+}
+cycleBoot();
+setInterval(cycleBoot, 2200);
 
-    <!-- Gmail -->
-    <a href="mailto:ankupatel279@gmail.com" class="contact-item" title="Email">
-      <i class="fas fa-envelope"></i>
-      <span>ankupatel279@gmail.com</span>
-    </a>
+function typeText(el, text, speed, cb){
+  let i = 0;
+  el.textContent = '';
+  const iv = setInterval(()=>{
+    el.textContent = text.slice(0,i) + (i < text.length ? '' : '');
+    i++;
+    if(i > text.length){ clearInterval(iv); if(cb) cb(); }
+  }, speed);
+}
+const nameEl = document.getElementById('typedName');
+const roleEl = document.getElementById('typedRole');
+typeText(nameEl, 'Ankit Patidar', 70, ()=>{
+  nameEl.insertAdjacentHTML('beforeend', '<span class="cursor"></span>');
+  typeText(roleEl, 'Penetration Tester // Cybersecurity // Ethical Hacking', 35);
+});
 
-    <!-- Phone -->
-    <a href="tel:+918103548282" class="contact-item" title="Call">
-      <i class="fas fa-phone"></i>
-      <span>+91 8103548282</span>
-    </a>
+/* ---------- Reveal on scroll ---------- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 
-    <!-- Website -->
-    <a href="https://ankitsec.in" target="_blank" class="contact-item" title="Website">
-      <i class="fas fa-globe"></i>
-      <span>ankitsec.in</span>
-    </a>
-
-  </div>
-</section>
-
+</body>
+</html>
